@@ -14,19 +14,8 @@ Uses AI (spaCy) to classify emails:
 ---
 
 ## 🧩 Project Structure
-├── chrome_extension/ # Chrome Extension (Frontend)
-│ ├── manifest.json
-│ ├── popup.html
-│ ├── popup.js
-│ └── icon.png
-└── ai_email_assistant_backend/ # FastAPI Backend
-├── main.py
-├── gmail.py
-├── calendar.py
-├── classifier.py
-├── utils.py
-├── requirements.txt
-└── token.json (auto-generated)
+- `chrome_extension/` — Chrome Extension frontend  
+- `ai_email_assistant_backend/` — FastAPI backend (Gmail + Calendar logic)  
 
 ---
 
