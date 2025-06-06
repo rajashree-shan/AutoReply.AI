@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Header, HTTPException
 from gmail import get_recent_emails, send_email
 from classifier import classify_email
-from calendar import get_available_slots
+from calendar_utils import get_available_slots
 from utils import find_available_slot
 import os
 
