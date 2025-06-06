@@ -5,16 +5,20 @@ from calendar import get_available_slots
 from utils import find_available_slot
 import os
 
-# Load token.json from environment variable if hosted (e.g., Render)
 if not os.path.exists("token.json") and os.getenv("GOOGLE_TOKEN_JSON"):
     with open("token.json", "w") as f:
         f.write(os.environ["GOOGLE_TOKEN_JSON"])
+        
+if not os.path.exists("credentials.json") and os.getenv("GOOGLE_CREDENTIALS_JSON"):
+    with open("credentials.json", "w") as f:
+        f.write(os.environ["GOOGLE_CREDENTIALS_JSON"])
 
 app = FastAPI()
 
 @app.get("/process-emails")
 def process_emails(x_token: str = Header(...)):
-    SECRET = "your-secret-token"
+    # 🔐 Get secret token from Render environment
+    SECRET = os.environ.get("ACCESS_TOKEN")
     if x_token != SECRET:
         raise HTTPException(status_code=403, detail="Unauthorized")
 
@@ -28,7 +32,9 @@ def process_emails(x_token: str = Header(...)):
         elif classification == "interview":
             available_slot = find_available_slot(busy_slots)
             if available_slot and from_email:
-                response = f"Thank you for reaching out. I'm available for a interview on {available_slot}."
+                response = (
+                    f"Thank you for reaching out. I'm available for an interview on {available_slot}."
+                )
                 send_email(to=from_email, subject="Interview Availability", body=response)
 
     return {"status": "Processed"}
