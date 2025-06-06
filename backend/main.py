@@ -38,3 +38,9 @@ def process_emails(x_token: str = Header(...)):
                 send_email(to=from_email, subject="Interview Availability", body=response)
 
     return {"status": "Processed"}
+@app.get("/")
+def read_root():
+    return {
+        "message": "👋 Welcome to AutoReply.AI!",
+        "note": "This is a secured API. Use /process-emails with the correct x-token header to trigger email processing."
+    }
